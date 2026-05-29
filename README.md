@@ -73,7 +73,7 @@ nutri-stream-lakehouse/
 
 - AWS account with billing alarm configured
 - AWS CLI installed and configured (`aws configure`)
-- Terraform >= 1.5
+- Terraform >= 1.6
 - Python >= 3.11
 
 ### Deploy infrastructure
