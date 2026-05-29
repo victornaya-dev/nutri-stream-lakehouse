@@ -76,6 +76,17 @@ nutri-stream-lakehouse/
 - Terraform >= 1.6
 - Python >= 3.11
 
+## Configuration
+
+Create a `terraform/terraform.tfvars` file with your own values (never commit this file):
+
+```hcl
+kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:YOUR_ACCOUNT_ID:stream/food-facts-stream"
+```
+
+This file is ignored by git — see `.gitignore`.
+
+
 ### Deploy infrastructure
 
 ```bash
