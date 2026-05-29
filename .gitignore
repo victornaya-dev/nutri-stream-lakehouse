@@ -1,3 +1,39 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+#terraformer
+generated/
+
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Terraform lock (opcional: puedes incluirlo o no)
+.terraform.lock.hcl
+
+# Variables sensibles
+*.tfvars
+*.tfvars.json
+
+# ZIP Lambdas (opcional)
+*.zip
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+terraform-deploy/infra/secrets.txt
+
+*.jar
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

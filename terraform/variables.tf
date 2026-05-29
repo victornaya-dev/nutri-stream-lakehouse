@@ -19,4 +19,6 @@ variable "kinesis_stream_name" {
   default = "food-facts-stream"
 }
 
-#variable "kinesis_stream_arn" {}
+variable "kinesis_stream_arn" {
+  default = ""
+}
