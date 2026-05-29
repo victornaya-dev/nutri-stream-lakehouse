@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "raw" {
   bucket        = var.bucket_raw
-  force_destroy = false
+  force_destroy = true
 
   tags = {
     Project     = var.project_name
@@ -27,7 +27,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "raw" {
 
 resource "aws_s3_bucket" "processed" {
   bucket        = var.bucket_processed
-  force_destroy = false
+  force_destroy = true
 
   tags = {
     Project     = var.project_name
