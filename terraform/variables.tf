@@ -15,3 +15,8 @@ variable "bucket_processed" {
   default = "food-facts-processed-victor"
 }
 
+variable "kinesis_stream_name" {
+  default = "food-facts-stream"
+}
+
+#variable "kinesis_stream_arn" {}
