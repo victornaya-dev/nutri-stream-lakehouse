@@ -22,3 +22,16 @@ variable "kinesis_stream_name" {
 variable "kinesis_stream_arn" {
   default = ""
 }
+
+
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+  sensitive   = true
+}
+
+variable "firehose_role_arn" {
+  description = "Firehose service role ARN"
+  type        = string
+  sensitive   = true
+}
