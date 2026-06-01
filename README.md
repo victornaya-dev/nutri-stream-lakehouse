@@ -122,8 +122,8 @@ QuickSight dashboard showing:
 | Week | Focus | Status |
 |---|---|---|
 | Week 1 | S3 + Kinesis + Python producer | ✅ Done |
-| Week 2 | Lambda + Firehose → S3 Parquet | 🔄 In progress |
-| Week 3 | Glue ETL + Athena queries | ⏳ Pending |
+| Week 2 | Lambda (JSON normalize) + Firehose → S3 | 🔄 In progress |
+| Week 3 | Glue ETL → Parquet + Athena queries | ⏳ Pending |
 | Week 4 | QuickSight + CloudWatch + docs | ⏳ Pending |
 
 ---
