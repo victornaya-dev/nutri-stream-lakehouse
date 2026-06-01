@@ -2,6 +2,8 @@ resource "aws_kinesis_firehose_delivery_stream" "food_facts_delivery_stream" {
   name        = "food-facts-delivery-stream"
   destination = "extended_s3"
 
+  depends_on = [aws_kinesis_stream.main] 
+
   kinesis_source_configuration {
     kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:${var.aws_account_id}:stream/food-facts-stream"
     role_arn           = var.firehose_role_arn
