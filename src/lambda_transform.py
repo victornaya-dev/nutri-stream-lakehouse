@@ -20,8 +20,11 @@ def lambda_handler(event, context):
             "salt": float(product.get("nutriments", {}).get("salt_100g") or 0),
         }
 
-        if not cleaned["product_name"] or not cleaned["nutriscore_grade"]:
+        VALID_NUTRISCORE = {"a", "b", "c", "d", "e"}
+
+        if not cleaned["product_name"] or cleaned["nutriscore_grade"] not in VALID_NUTRISCORE:
             continue
+
 
         key = f"cleaned/{record['kinesis']['sequenceNumber']}.json"
         s3.put_object(Bucket=BUCKET, Key=key, Body=json.dumps(cleaned))
