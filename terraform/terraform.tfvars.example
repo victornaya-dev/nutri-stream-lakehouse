@@ -1,3 +1,7 @@
+aws_region   = "eu-west-1"
+project_name = "nutri-stream"
+bucket_raw   = "BUCKET_NAME"
+
 aws_account_id     = "ACCOUNT_ID"
-kinesis_stream_arn = "arn:aws:kinesis:REGION:ACCOUNT_ID:stream/food-facts-stream"
+kinesis_stream_arn = "arn:aws:kinesis:AWS_REGION:ACCOUNT_ID:stream/food-facts-stream"
 firehose_role_arn  = "arn:aws:iam::ACCOUNT_ID:role/service-role/FIREHOSE_ROLE_NAME"
