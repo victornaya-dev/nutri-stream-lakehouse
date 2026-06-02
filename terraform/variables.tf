@@ -20,7 +20,8 @@ variable "kinesis_stream_name" {
 }
 
 variable "kinesis_stream_arn" {
-  default = ""
+  description = "ARN of the Kinesis Data Stream"
+  type        = string
 }
 
 
@@ -35,3 +36,4 @@ variable "firehose_role_arn" {
   type        = string
   sensitive   = true
 }
+

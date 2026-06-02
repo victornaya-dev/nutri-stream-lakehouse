@@ -1,0 +1,3 @@
+aws_account_id     = "ACCOUNT_ID"
+kinesis_stream_arn = "arn:aws:kinesis:REGION:ACCOUNT_ID:stream/food-facts-stream"
+firehose_role_arn  = "arn:aws:iam::ACCOUNT_ID:role/service-role/FIREHOSE_ROLE_NAME"
