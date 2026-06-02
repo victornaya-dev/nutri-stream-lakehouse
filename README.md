@@ -73,6 +73,7 @@ nutri-stream-lakehouse/
 
 - AWS account with billing alarm configured
 - AWS CLI installed and configured (`aws configure`)
+- AWS IAM user with permissions: Lambda, Kinesis, S3, IAM, CloudWatch, Glue, Athena, QuickSight
 - Terraform >= 1.6
 - Python >= 3.11
 
