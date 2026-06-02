@@ -1,29 +1,35 @@
 variable "aws_region" {
-  default = "eu-west-1"
+  description = "AWS region"
+  type        = string
+  default     = "eu-west-1"
 }
 
 variable "project_name" {
-  default = "nutri-stream"
+  description = "Project name"
+  type        = string
+  default     = "nutri-stream"
 }
 
-
 variable "bucket_raw" {
-  default = "food-facts-raw-victor"
+  description = "S3 raw bucket name"
+  type        = string
 }
 
 variable "bucket_processed" {
-  default = "food-facts-processed-victor"
+  description = "S3 processed bucket name"
+  type        = string
 }
 
 variable "kinesis_stream_name" {
-  default = "food-facts-stream"
+  description = "Kinesis Data Stream name"
+  type        = string
+  default     = "food-facts-stream"
 }
 
 variable "kinesis_stream_arn" {
   description = "ARN of the Kinesis Data Stream"
   type        = string
 }
-
 
 variable "aws_account_id" {
   description = "AWS Account ID"
@@ -36,4 +42,3 @@ variable "firehose_role_arn" {
   type        = string
   sensitive   = true
 }
-
