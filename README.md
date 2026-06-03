@@ -76,6 +76,7 @@ nutri-stream-lakehouse/
 - AWS IAM user with permissions: Lambda, Kinesis, S3, IAM, CloudWatch, Glue, Athena, QuickSight
 - Terraform >= 1.6
 - Python >= 3.11
+- GitHub account (for CI/CD with GitHub Actions)
 
 ## Configuration
 
@@ -96,6 +97,26 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+## CI/CD
+
+Every push to `main` triggers GitHub Actions:
+- Zips and deploys Lambda automatically
+- Runs `terraform apply` for infrastructure changes
+
+### Setup
+Add these secrets in GitHub → Settings → Secrets:
+    AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY
+    AWS_ACCOUNT_ID
+    KINESIS_STREAM_ARN
+    FIREHOSE_ROLE_ARN
+    BUCKET_RAW
+    BUCKET_PROCESSED
+    
+### Branches
+- `main` → production, auto-deploy via GitHub Actions
+- `develop` → development, manual deploy with `terraform apply`
 
 ### Run the producer
 
@@ -123,9 +144,9 @@ QuickSight dashboard showing:
 | Week | Focus | Status |
 |---|---|---|
 | Week 1 | S3 + Kinesis + Python producer | ✅ Done |
-| Week 2 | Lambda (JSON normalize) + Firehose → S3 | 🔄 In progress |
-| Week 3 | Glue ETL → Parquet + Athena queries | ⏳ Pending |
-| Week 4 | QuickSight + CloudWatch + docs | ⏳ Pending |
+| Week 2 | Lambda (JSON normalize) + Firehose → S3 | ✅ Done |
+| Week 3 | Glue ETL → Parquet + Athena queries | 🔄 In progress |
+| Week 4 | QuickSight + CloudWatch + CI/CD + docs | ⏳ Pending |
 
 ---
 
