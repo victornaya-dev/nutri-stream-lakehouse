@@ -36,7 +36,7 @@ resource "aws_iam_role_policy_attachment" "cloudwatch" {
 resource "aws_iam_role" "glue_role" {
   name        = "AWSGlueServiceRole-food-facts"
   path        = "/"
-  description = "Allows Glue to call AWS services on your behalf."
+  description = "Allows Glue to call AWS services on your behalf. "
 
   assume_role_policy = <<POLICY
 {
