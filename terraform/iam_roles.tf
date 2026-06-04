@@ -31,3 +31,33 @@ resource "aws_iam_role_policy_attachment" "cloudwatch" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
 }
+
+
+resource "aws_iam_role" "glue_role" {
+  name        = "AWSGlueServiceRole-food-facts"
+  path        = "/"
+  description = "Allows Glue to call AWS services on your behalf."
+
+  assume_role_policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "glue.amazonaws.com"
+      }
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+    "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+  ]
+
+  max_session_duration = 3600
+}
