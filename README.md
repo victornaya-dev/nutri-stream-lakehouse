@@ -56,7 +56,6 @@ nutri-stream-lakehouse/
 │   ├── athena.tf
 │   ├── iam_roles.tf
 │   ├── variables.tf
-│   └── outputs.tf
 ├── src/
 │   ├── producer.py          # Kinesis producer — Open Food Facts API
 │   ├── lambda_transform.py  # Stream transformation
