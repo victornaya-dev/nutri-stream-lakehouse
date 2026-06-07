@@ -47,6 +47,7 @@ Open Food Facts API (🇫🇷)
 ```
 nutri-stream-lakehouse/
 ├── terraform/
+│   ├── cloudwatch.tf
 │   ├── provider.tf
 │   ├── s3.tf
 │   ├── kinesis.tf
@@ -59,9 +60,11 @@ nutri-stream-lakehouse/
 ├── src/
 │   ├── producer.py          # Kinesis producer — Open Food Facts API
 │   ├── lambda_transform.py  # Stream transformation
-│   └── glue_job.py          # Batch ETL — PySpark
+│   └── glue_etl.py          # Batch ETL — PySpark
 ├── docs/
 │   └── architecture.png
+│   └── athena_queries.sql
+│   └── Nutriscore_dashboard.jpg
 └── README.md
 ```
 
@@ -135,8 +138,7 @@ QuickSight dashboard showing:
 - Average sugar/fat/salt levels by category
 - Nutri-Score A vs E distribution
 
->  Screenshots coming in Week 4
-
+![Nutriscore Dashboard](docs/Nutriscore_dashboard.jpg)
 ---
 
 ## Build Log
