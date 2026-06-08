@@ -48,6 +48,7 @@ Open Food Facts API (🇫🇷)
 nutri-stream-lakehouse/
 ├── terraform/
 │   ├── cloudwatch.tf
+│   ├── cloudwatch_dashboards.tf
 │   ├── provider.tf
 │   ├── s3.tf
 │   ├── kinesis.tf
