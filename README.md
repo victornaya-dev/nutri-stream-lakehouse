@@ -137,7 +137,24 @@ QuickSight dashboard showing:
 - Average sugar/fat/salt levels by category
 - Nutri-Score A vs E distribution
 
+> QuickSight dashboards are account-bound and cannot be exported.
+> To reproduce: run `producer.py` to ingest data, then recreate the
+> visualizations in your own QuickSight account using the Athena dataset.
+
 ![Nutriscore Dashboard](docs/Nutriscore_dashboard.jpg)
+
+---
+
+## Dataset
+
+Sample dataset used for this demo:
+
+| Source | Records | Period |
+|---|---|---|
+| Open Food Facts API | 171 products | June 2025 |
+
+> Full dataset: [world.openfoodfacts.org](https://world.openfoodfacts.org/)
+
 ---
 
 ## Build Log
