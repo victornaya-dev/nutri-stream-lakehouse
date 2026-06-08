@@ -18,4 +18,6 @@ resource "aws_lambda_event_source_mapping" "kinesis_trigger" {
   starting_position = "LATEST"
   batch_size        = 100
   enabled           = true
+
+  depends_on = [aws_lambda_function.transform]
 }
