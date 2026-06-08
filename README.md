@@ -145,6 +145,18 @@ QuickSight dashboard showing:
 
 ---
 
+## Monitoring
+
+CloudWatch dashboard showing:
+- Lambda invocations & errors (food-facts-transform)
+- Lambda duration
+- Kinesis incoming records (food-facts-stream)
+- Glue job elapsed time (food-facts-etl)
+
+> Dashboard imported into Terraform — see `terraform/cloudwatch_dashboards.tf`
+
+![CloudWatch Dashboard](docs/CloudWatch_dashboards.jpg)
+
 ## Dataset
 
 Sample dataset used for this demo:
