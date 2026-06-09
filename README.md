@@ -6,6 +6,7 @@
 ![AWS](https://img.shields.io/badge/AWS-Kinesis%20%7C%20Glue%20%7C%20Athena-orange?logo=amazon-aws)
 ![IaC](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform)
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![CI/CD](https://github.com/victornaya-dev/nutri-stream-lakehouse/actions/workflows/deploy.yml/badge.svg)
 
 ---
 
