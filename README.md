@@ -2,7 +2,7 @@
 
 > Real-time food data pipeline built on AWS — ingesting, transforming, and analyzing French food products from Open Food Facts.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![AWS](https://img.shields.io/badge/AWS-Kinesis%20%7C%20Glue%20%7C%20Athena-orange?logo=amazon-aws)
 ![IaC](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform)
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
@@ -10,6 +10,8 @@
 ---
 
 ## Architecture
+
+![Architecture](docs/architecture.png)
 
 ```
 Open Food Facts API (🇫🇷)
@@ -23,11 +25,9 @@ Open Food Facts API (🇫🇷)
     → CloudWatch                  (monitoring & alerts)
 ```
 
->  Architecture diagram coming in Week 4
-
 ---
 
-##  Stack
+## Stack
 
 | Layer | Service |
 |---|---|
@@ -42,7 +42,7 @@ Open Food Facts API (🇫🇷)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 nutri-stream-lakehouse/
@@ -56,21 +56,22 @@ nutri-stream-lakehouse/
 │   ├── glue.tf
 │   ├── athena.tf
 │   ├── iam_roles.tf
-│   ├── variables.tf
+│   └── variables.tf
 ├── src/
 │   ├── producer.py          # Kinesis producer — Open Food Facts API
 │   ├── lambda_transform.py  # Stream transformation
 │   └── glue_etl.py          # Batch ETL — PySpark
 ├── docs/
-│   └── architecture.png
-│   └── athena_queries.sql
-│   └── Nutriscore_dashboard.jpg
+│   ├── architecture.png
+│   ├── athena_queries.sql
+│   ├── Nutriscore_dashboard.jpg
+│   └── CloudWatch_dashboards.jpg
 └── README.md
 ```
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -81,7 +82,7 @@ nutri-stream-lakehouse/
 - Python >= 3.11
 - GitHub account (for CI/CD with GitHub Actions)
 
-## Configuration
+### Configuration
 
 Create a `terraform/terraform.tfvars` file with your own values (never commit this file):
 
@@ -90,7 +91,6 @@ kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:YOUR_ACCOUNT_ID:stream/food-fact
 ```
 
 This file is ignored by git — see `.gitignore`.
-
 
 ### Deploy infrastructure
 
@@ -101,6 +101,15 @@ terraform plan
 terraform apply
 ```
 
+### Run the producer
+
+```bash
+pip install boto3 requests
+python src/producer.py
+```
+
+---
+
 ## CI/CD
 
 Every push to `main` triggers GitHub Actions:
@@ -108,25 +117,23 @@ Every push to `main` triggers GitHub Actions:
 - Runs `terraform apply` for infrastructure changes
 
 ### Setup
-Add these secrets in GitHub → Settings → Secrets:
-    AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY
-    AWS_ACCOUNT_ID
-    KINESIS_STREAM_ARN
-    FIREHOSE_ROLE_ARN
-    BUCKET_RAW
-    BUCKET_PROCESSED
-    
+
+Add these secrets in GitHub → Settings → Secrets and variables → Actions:
+
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_ACCOUNT_ID
+KINESIS_STREAM_ARN
+FIREHOSE_ROLE_ARN
+BUCKET_RAW
+BUCKET_PROCESSED
+```
+
 ### Branches
+
 - `main` → production, auto-deploy via GitHub Actions
 - `develop` → development, manual deploy with `terraform apply`
-
-### Run the producer
-
-```bash
-pip install boto3 requests
-python src/producer.py
-```
 
 ---
 
@@ -158,9 +165,9 @@ CloudWatch dashboard showing:
 
 ![CloudWatch Dashboard](docs/CloudWatch_dashboards.jpg)
 
-## Dataset
+---
 
-Sample dataset used for this demo:
+## Dataset
 
 | Source | Records | Period |
 |---|---|---|
@@ -177,18 +184,11 @@ Sample dataset used for this demo:
 | Week 1 | S3 + Kinesis + Python producer | ✅ Done |
 | Week 2 | Lambda (JSON normalize) + Firehose → S3 | ✅ Done |
 | Week 3 | Glue ETL → Parquet + Athena queries | ✅ Done |
-| Week 4 | QuickSight + CloudWatch + CI/CD + docs | 🔄 In progress |
+| Week 4 | QuickSight + CloudWatch + CI/CD + docs | ✅ Done |
 
 ---
 
-## Related Article
-
-*"Building a real-time food data pipeline with AWS Kinesis, Glue and Terraform"*
-→ Published on Medium *(coming soon)*
-
----
-
-##  Author
+## Author
 
 **Victor Naya** —
 [![GitHub](https://img.shields.io/badge/GitHub-victornaya--dev-black?logo=github)](https://github.com/victornaya-dev)
