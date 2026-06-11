@@ -124,6 +124,7 @@ Add these secrets in GitHub → Settings → Secrets and variables → Actions:
 ```
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
+AWS_REGION
 AWS_ACCOUNT_ID
 KINESIS_STREAM_ARN
 FIREHOSE_ROLE_ARN
