@@ -111,6 +111,18 @@ python src/producer.py
 
 ---
 
+### Run Glue ETL
+
+The Glue job must be triggered manually after data ingestion:
+
+```bash
+aws glue start-job-run --job-name food-facts-etl
+```
+
+Or from the AWS Console → Glue → Jobs → food-facts-etl → Run.
+
+---
+
 ## CI/CD
 
 Every push to `main` triggers GitHub Actions:
