@@ -7,7 +7,7 @@ from awsglue.job import Job
 from awsglue.dynamicframe import DynamicFrame
 from pyspark.sql.functions import col, upper
 
-args = getResolvedOptions(sys.argv, ['JOB_NAME'])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'output_path'])
 sc = SparkContext()
 glueContext = GlueContext(sc)
 spark = glueContext.spark_session
@@ -32,7 +32,7 @@ glueContext.write_dynamic_frame.from_options(
     frame=output,
     connection_type="s3",
     connection_options={
-        "path": "s3://food-facts-processed-victor/parquet/",
+        "path": args['output_path'],
         "partitionKeys": ["nutriscore_grade"]
     },
     format="parquet"
