@@ -14,7 +14,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
   alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
-    FunctionName = "food-facts-transform"
+    FunctionName = aws_lambda_function.transform.function_name
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
   alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
-    FunctionName = "food-facts-transform"
+    FunctionName = aws_lambda_function.transform.function_name
   }
 }
 
@@ -46,6 +46,6 @@ resource "aws_cloudwatch_metric_alarm" "kinesis_lag" {
   alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
-    StreamName = "food-facts-stream"
+    StreamName = aws_kinesis_stream.main.name
   }
 }

@@ -2,15 +2,15 @@ resource "aws_kinesis_firehose_delivery_stream" "food_facts_delivery_stream" {
   name        = "food-facts-delivery-stream"
   destination = "extended_s3"
 
-  depends_on = [aws_kinesis_stream.main] 
+  depends_on = [aws_kinesis_stream.main]
 
   kinesis_source_configuration {
-    kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:${var.aws_account_id}:stream/food-facts-stream"
+    kinesis_stream_arn = "arn:aws:kinesis:${var.aws_region}:${var.aws_account_id}:stream/${var.kinesis_stream_name}"
     role_arn           = var.firehose_role_arn
   }
 
   extended_s3_configuration {
-    bucket_arn          = "arn:aws:s3:::food-facts-raw-victor"
+    bucket_arn          = "arn:aws:s3:::${var.bucket_raw}"
     role_arn            = var.firehose_role_arn
     buffering_interval  = 60
     buffering_size      = 5

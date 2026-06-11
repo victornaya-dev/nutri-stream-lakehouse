@@ -12,7 +12,7 @@
 
 ## Architecture
 
-![Architecture](docs/architecture.png)
+<img src="docs/architecture.png" width="75%"/>
 
 ```
 Open Food Facts API (🇫🇷)
