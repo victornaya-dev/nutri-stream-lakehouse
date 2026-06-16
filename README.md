@@ -154,10 +154,10 @@ BUCKET_PROCESSED
 ## Dashboard
 
 QuickSight dashboard showing:
-- Top 10 brands ingested in real time
-- Product distribution by category (dairy, beverages, snacks...)
-- Average sugar/fat/salt levels by category
-- Nutri-Score A vs E distribution
+- Nutriscore distribution (pie chart)
+- Sugar vs Fat by Nutriscore (scatter plot)
+- Top 10 brands by product count
+- Average nutrients (sugar, fat, salt) by Nutriscore grade
 
 > QuickSight dashboards are account-bound and cannot be exported.
 > To reproduce: run `producer.py` to ingest data, then recreate the
@@ -185,13 +185,13 @@ CloudWatch dashboard showing:
 
 | Source | Records | Period |
 |---|---|---|
-| Open Food Facts API | 171 products | June 2025 |
+| Open Food Facts API | 171 products | June 2026 |
 
 > Full dataset: [world.openfoodfacts.org](https://world.openfoodfacts.org/)
 
 ---
 
-## Build Log
+## Build Log — 2026
 
 | Week | Focus | Status |
 |---|---|---|
