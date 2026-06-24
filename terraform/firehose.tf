@@ -6,12 +6,12 @@ resource "aws_kinesis_firehose_delivery_stream" "food_facts_delivery_stream" {
 
   kinesis_source_configuration {
     kinesis_stream_arn = "arn:aws:kinesis:${var.aws_region}:${var.aws_account_id}:stream/${var.kinesis_stream_name}"
-    role_arn           = var.firehose_role_arn
+    role_arn           = aws_iam_role.firehose_role.arn
   }
 
   extended_s3_configuration {
     bucket_arn          = "arn:aws:s3:::${var.bucket_raw}"
-    role_arn            = var.firehose_role_arn
+    role_arn            = aws_iam_role.firehose_role.arn
     buffering_interval  = 60
     buffering_size      = 5
     compression_format  = "GZIP"

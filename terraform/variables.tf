@@ -37,8 +37,3 @@ variable "aws_account_id" {
   sensitive   = true
 }
 
-variable "firehose_role_arn" {
-  description = "Firehose service role ARN"
-  type        = string
-  sensitive   = true
-}
