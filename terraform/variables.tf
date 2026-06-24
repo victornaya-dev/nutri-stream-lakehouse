@@ -26,10 +26,6 @@ variable "kinesis_stream_name" {
   default     = "food-facts-stream"
 }
 
-variable "kinesis_stream_arn" {
-  description = "ARN of the Kinesis Data Stream"
-  type        = string
-}
 
 variable "aws_account_id" {
   description = "AWS Account ID"
