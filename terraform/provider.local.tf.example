@@ -1,0 +1,16 @@
+# For local deployment without S3 backend
+# Rename this file to provider.tf to use local state
+# (replaces the existing provider.tf)
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+}
