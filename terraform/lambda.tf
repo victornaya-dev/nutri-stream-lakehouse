@@ -13,7 +13,7 @@ resource "aws_lambda_function" "transform" {
 }
 
 resource "aws_lambda_event_source_mapping" "kinesis_trigger" {
-  event_source_arn  = var.kinesis_stream_arn
+  event_source_arn  = aws_kinesis_stream.main.arn
   function_name     = aws_lambda_function.transform.arn
   starting_position = "LATEST"
   batch_size        = 100
