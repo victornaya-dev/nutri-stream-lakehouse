@@ -70,4 +70,5 @@ resource "aws_s3_object" "glue_script" {
   key    = "scripts/glue_etl.py"
   source = "${path.module}/../src/glue_etl.py"
   etag   = filemd5("${path.module}/../src/glue_etl.py")
+  depends_on = [aws_s3_bucket.raw]
 }
