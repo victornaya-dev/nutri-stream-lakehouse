@@ -44,7 +44,7 @@ resource "aws_glue_job" "etl" {
   execution_class   = "STANDARD"
 
   command {
-    script_location = "s3://aws-glue-assets-${var.aws_account_id}-eu-west-1/scripts/food-facts-etl.py"
+    script_location = "s3://${var.bucket_raw}/scripts/glue_etl.py"
     python_version  = "3"
   }
 
@@ -52,14 +52,14 @@ resource "aws_glue_job" "etl" {
     "--job-language"                     = "python"
     "--enable-metrics"                   = "true"
     "--enable-continuous-cloudwatch-log" = "true"
-    "--TempDir"                          = "s3://aws-glue-assets-${var.aws_account_id}-eu-west-1/temporary/"
+    "--TempDir"                          = "s3://${var.bucket_raw}/temporary/"
     "--conf"                             = "spark.eventLog.rolling.enabled=true --conf spark.sql.catalog.glue_catalog.glue.skip-name-validation=true"
     "--enable-glue-datacatalog"          = "true"
     "--enable-job-insights"              = "true"
     "--enable-observability-metrics"     = "true"
     "--enable-spark-ui"                  = "true"
     "--job-bookmark-option"              = "job-bookmark-disable"
-    "--spark-event-logs-path"            = "s3://aws-glue-assets-${var.aws_account_id}-eu-west-1/sparkHistoryLogs/"
+    "--spark-event-logs-path"            = "s3://${var.bucket_raw}/sparkHistoryLogs/"
     "--output_path"                      = "s3://${var.bucket_processed}/parquet/"
   }
 }
