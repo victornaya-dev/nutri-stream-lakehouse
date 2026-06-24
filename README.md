@@ -76,14 +76,35 @@ nutri-stream-lakehouse/
 
 ### Prerequisites
 
-- AWS account with billing alarm configured
+- AWS account with a billing alarm configured
 - AWS CLI installed and configured (`aws configure`)
-- AWS IAM user with permissions: Lambda, Kinesis, S3, IAM, CloudWatch, Glue, Athena, QuickSight
+- AWS IAM user with the following permissions: `AmazonKinesisFullAccess`, `AWSLambda_FullAccess`, `AWSGlueConsoleFullAccess`, `AmazonS3FullAccess`, `AmazonAthenaFullAccess`, `CloudWatchFullAccess`, `IAMFullAccess`
 - Terraform >= 1.6
 - Python >= 3.11
 - GitHub account (for CI/CD with GitHub Actions)
 
-### Configuration
+> **Note:** QuickSight must be enabled manually in the AWS Console before running the pipeline. Go to AWS Console → QuickSight → Sign up for QuickSight (Standard edition is enough).
+
+---
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/victornaya-dev/nutri-stream-lakehouse.git
+cd nutri-stream-lakehouse
+```
+
+### 2. Package the Lambda function
+
+```bash
+cd src
+zip lambda_transform.zip lambda_transform.py
+cd ..
+```
+
+> **Required before `terraform apply`** — Terraform looks for this `.zip` file when deploying Lambda.
+
+### 3. Configure Terraform variables
 
 Create a `terraform/terraform.tfvars` file with your own values (never commit this file):
 
@@ -93,7 +114,7 @@ kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:YOUR_ACCOUNT_ID:stream/food-fact
 
 This file is ignored by git — see `.gitignore`.
 
-### Deploy infrastructure
+### 4. Deploy infrastructure
 
 ```bash
 cd terraform
@@ -102,24 +123,79 @@ terraform plan
 terraform apply
 ```
 
-### Run the producer
+### 5. Run the producer
+
+Open a new terminal and run:
 
 ```bash
 pip install boto3 requests
 python src/producer.py
 ```
 
----
+Wait ~2 minutes until you see logs like:
 
-### Run Glue ETL
-
-The Glue job must be triggered manually after data ingestion:
-
-```bash
-aws glue start-job-run --job-name food-facts-etl
+```
+Enviado: Danette Chocolat
+Enviado: Evian
+10 productos enviados. Esperando 30s...
 ```
 
-Or from the AWS Console → Glue → Jobs → food-facts-etl → Run.
+### 6. Run the Glue pipeline
+
+Once the producer has sent at least one batch, run the crawler and ETL job in order:
+
+```bash
+# 1. Crawl raw JSON files
+aws glue start-crawler --name food-facts-crawler
+
+# 2. Wait ~1-2 min until the crawler finishes, then run the ETL
+aws glue start-job-run --job-name food-facts-etl
+
+# 3. Crawl the processed Parquet files
+aws glue start-crawler --name food-facts-parquet-crawler
+```
+
+### 7. Query with Athena
+
+Once the second crawler finishes, open AWS Console → Athena and run:
+
+```sql
+SELECT nutriscore_grade, COUNT(*) as total
+FROM food_facts_db.parquet
+GROUP BY nutriscore_grade
+ORDER BY total DESC;
+```
+
+More queries available in `docs/athena_queries.sql`.
+
+### 8. Tear down
+
+When you're done, destroy all resources to avoid ongoing charges:
+
+```bash
+cd terraform
+terraform destroy
+```
+
+---
+
+## Cost Estimate
+
+This project is designed to be cheap to reproduce. Estimated cost for a full end-to-end run:
+
+| Service | Cost |
+|---|---|
+| Kinesis Data Streams (1 shard) | ~$0.015/hour |
+| Lambda | Virtually free at this volume |
+| Kinesis Firehose | ~$0.029 per GB delivered |
+| Glue ETL job (G.1X, ~5 min run) | ~$0.44 per run |
+| S3 (raw + processed) | Cents |
+| Athena | $5 per TB scanned (Parquet = nearly zero) |
+| CloudWatch | Free tier covers this |
+
+> **Estimated total to reproduce this project end-to-end: < $5**
+>
+> The main ongoing cost is Kinesis (~$0.36/day) when left running idle. Stop the producer and run `terraform destroy` when you're done.
 
 ---
 
