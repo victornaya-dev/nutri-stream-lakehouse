@@ -1,6 +1,8 @@
-# For local deployment without S3 backend
-# Rename this file to provider.tf to use local state
-# (replaces the existing provider.tf)
+# For local deployment without S3 backend.
+# Rename this file to provider.tf to use local state (replaces the existing provider.tf).
+#
+# If you prefer to keep the S3 backend, update provider.tf with your own bucket:
+#   bucket = "YOUR_BUCKET_NAME"
 
 terraform {
   required_providers {
