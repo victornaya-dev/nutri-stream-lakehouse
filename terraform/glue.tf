@@ -63,3 +63,11 @@ resource "aws_glue_job" "etl" {
     "--output_path"                      = "s3://${var.bucket_processed}/parquet/"
   }
 }
+
+
+resource "aws_s3_object" "glue_script" {
+  bucket = var.bucket_raw
+  key    = "scripts/glue_etl.py"
+  source = "${path.module}/../src/glue_etl.py"
+  etag   = filemd5("${path.module}/../src/glue_etl.py")
+}
