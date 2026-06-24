@@ -50,13 +50,15 @@ nutri-stream-lakehouse/
 ├── terraform/
 │   ├── cloudwatch.tf
 │   ├── cloudwatch_dashboards.tf
-│   ├── provider.tf
-│   ├── s3.tf
+│   ├── firehose.tf
+│   ├── glue.tf
+│   ├── iam_roles.tf
 │   ├── kinesis.tf
 │   ├── lambda.tf
-│   ├── glue.tf
-│   ├── athena.tf
-│   ├── iam_roles.tf
+│   ├── provider.tf
+│   ├── provider.local.tf.example
+│   ├── s3.tf
+│   ├── terraform.tfvars.example
 │   └── variables.tf
 ├── src/
 │   ├── producer.py          # Kinesis producer — Open Food Facts API
@@ -64,9 +66,10 @@ nutri-stream-lakehouse/
 │   └── glue_etl.py          # Batch ETL — PySpark
 ├── docs/
 │   ├── architecture.png
+│   ├── architecture.xml
 │   ├── athena_queries.sql
-│   ├── Nutriscore_dashboard.jpg
-│   └── CloudWatch_dashboards.jpg
+│   ├── CloudWatch_dashboards.jpg
+│   └── Nutriscore_dashboard.jpg
 └── README.md
 ```
 
@@ -109,12 +112,21 @@ cd ..
 Create a `terraform/terraform.tfvars` file with your own values (never commit this file):
 
 ```hcl
-kinesis_stream_arn = "arn:aws:kinesis:eu-west-1:YOUR_ACCOUNT_ID:stream/food-facts-stream"
+aws_region       = "eu-west-1"
+project_name     = "nutri-stream"
+bucket_raw       = "your-raw-bucket-name"
+bucket_processed = "your-processed-bucket-name"
+aws_account_id   = "YOUR_ACCOUNT_ID"
 ```
+
+> You can find your Account ID by running `aws sts get-caller-identity`
 
 This file is ignored by git — see `.gitignore`.
 
 ### 4. Deploy infrastructure
+
+> **Note:** The default `provider.tf` uses an S3 backend for state management.
+> For a quick local deploy, rename `provider.local.tf.example` to `provider.tf` before running `terraform init`.
 
 ```bash
 cd terraform
@@ -214,8 +226,6 @@ AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_REGION
 AWS_ACCOUNT_ID
-KINESIS_STREAM_ARN
-FIREHOSE_ROLE_ARN
 BUCKET_RAW
 BUCKET_PROCESSED
 ```
