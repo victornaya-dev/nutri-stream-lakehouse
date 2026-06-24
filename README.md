@@ -81,7 +81,7 @@ nutri-stream-lakehouse/
 
 - AWS account with a billing alarm configured
 - AWS CLI installed and configured (`aws configure`)
-- AWS IAM user with the following permissions: `AmazonKinesisFullAccess`, `AWSLambda_FullAccess`, `AWSGlueConsoleFullAccess`, `AmazonS3FullAccess`, `AmazonAthenaFullAccess`, `CloudWatchFullAccessV2`, `IAMFullAccess`
+- AWS IAM user with the following permissions: `AmazonKinesisFullAccess`, `AWSLambda_FullAccess`, `AWSGlueConsoleFullAccess`, `AmazonS3FullAccess`, `AmazonAthenaFullAccess`, `CloudWatchFullAccessV2`, `IAMFullAccess`, `AmazonSNSFullAccess`, `AmazonKinesisFirehoseFullAccess`
 - Terraform >= 1.6
 - Python >= 3.11
 - GitHub account (for CI/CD with GitHub Actions)
