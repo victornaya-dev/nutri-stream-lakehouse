@@ -99,6 +99,14 @@ cd nutri-stream-lakehouse
 
 ### 2. Package the Lambda function
 
+**Windows (PowerShell)**
+```powershell
+cd src
+Compress-Archive -Path lambda_transform.py -DestinationPath lambda_transform.zip
+cd ..
+```
+
+**Linux / Mac**
 ```bash
 cd src
 zip lambda_transform.zip lambda_transform.py
