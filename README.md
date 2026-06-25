@@ -99,6 +99,14 @@ cd nutri-stream-lakehouse
 
 ### 2. Package the Lambda function
 
+**Windows (PowerShell)**
+```powershell
+cd src
+Compress-Archive -Path lambda_transform.py -DestinationPath lambda_transform.zip
+cd ..
+```
+
+**Linux / Mac**
 ```bash
 cd src
 zip lambda_transform.zip lambda_transform.py
@@ -151,6 +159,9 @@ Enviado: Danette Chocolat
 Enviado: Evian
 10 productos enviados. Esperando 30s...
 ```
+
+> **Note:** If the producer returns 401 or 503 errors, the Open Food Facts API may be down.
+> Check the live status at [https://status.openfoodfacts.org](https://status.openfoodfacts.org) before debugging your code.
 
 ### 6. Run the Glue pipeline
 
