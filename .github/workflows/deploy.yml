@@ -25,8 +25,8 @@ jobs:
       - name: Check AWS identity
         run: aws sts get-caller-identity
 
-      # - name: Check backend bucket (debug only)
-      #   run: aws s3 ls s3://food-facts-raw-victor --region eu-west-1
+      - name: Check backend bucket
+        run: aws s3 ls s3://food-facts-raw-victor --region eu-west-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -40,14 +40,9 @@ jobs:
           terraform import aws_iam_role.glue_role AWSGlueServiceRole-food-facts || true
           terraform import aws_iam_role.firehose_role firehose-food-facts-role || true
           terraform import aws_iam_role.lambda_role food-facts-transform-role-mnn2m10u || true
-          terraform import aws_kinesis_stream.main arn:aws:kinesis:eu-west-1:${{ secrets.AWS_ACCOUNT_ID }}:stream/food-facts-stream || true
+          terraform import aws_kinesis_stream.main arn:aws:kinesis:${{ secrets.AWS_REGION }}:${{ secrets.AWS_ACCOUNT_ID }}:stream/food-facts-stream || true
           terraform import aws_s3_bucket.raw ${{ secrets.BUCKET_RAW }} || true
           terraform import aws_s3_bucket.processed ${{ secrets.BUCKET_PROCESSED }} || true
-          terraform import aws_glue_catalog_database.food_facts ${{ secrets.AWS_ACCOUNT_ID }}:food_facts_db || true
-          terraform import aws_glue_crawler.json_crawler food-facts-crawler || true
-          terraform import aws_glue_crawler.parquet_crawler food-facts-parquet-crawler || true
-          terraform import aws_glue_job.etl food-facts-etl || true
-          terraform import aws_lambda_function.transform food-facts-transform || true
         env:
           TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           TF_VAR_kinesis_stream_arn: ${{ secrets.KINESIS_STREAM_ARN }}
