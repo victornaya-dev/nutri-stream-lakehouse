@@ -48,6 +48,20 @@ jobs:
           terraform import aws_glue_crawler.parquet_crawler food-facts-parquet-crawler || true
           terraform import aws_glue_job.etl food-facts-etl || true
           terraform import aws_lambda_function.transform food-facts-transform || true
+          EVENT_SOURCE_UUID=$(aws lambda list-event-source-mappings \
+            --function-name food-facts-transform \
+            --query 'EventSourceMappings[0].UUID' \
+            --output text 2>/dev/null || echo "")
+          if [ -n "$EVENT_SOURCE_UUID" ] && [ "$EVENT_SOURCE_UUID" != "None" ]; then
+            terraform import aws_lambda_event_source_mapping.kinesis_trigger $EVENT_SOURCE_UUID || true
+          fi
+          FIREHOSE_ARN=$(aws firehose describe-delivery-stream \
+            --delivery-stream-name food-facts-delivery-stream \
+            --query 'DeliveryStreamDescription.DeliveryStreamARN' \
+            --output text 2>/dev/null || echo "")
+          if [ -n "$FIREHOSE_ARN" ] && [ "$FIREHOSE_ARN" != "None" ]; then
+            terraform import aws_kinesis_firehose_delivery_stream.food_facts_delivery_stream $FIREHOSE_ARN || true
+          fi
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
