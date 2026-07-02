@@ -230,6 +230,28 @@ Every push to `main` triggers GitHub Actions:
 
 ### Setup
 
+#### 1. Create the Terraform state bucket
+
+The S3 backend used by Terraform to store state must exist before the first GitHub Actions run. Create it manually once in your AWS account:
+
+```bash
+aws s3 mb s3://your-terraform-state-bucket-name --region eu-west-1
+```
+
+Then update `terraform/provider.tf` with your bucket name:
+
+```hcl
+backend "s3" {
+  bucket = "your-terraform-state-bucket-name"
+  key    = "terraform/state/terraform.tfstate"
+  region = "eu-west-1"
+}
+```
+
+> This bucket is not managed by Terraform — it must exist before `terraform init` runs. Do not destroy it manually.
+
+#### 2. Add GitHub Actions secrets
+
 Add these secrets in GitHub → Settings → Secrets and variables → Actions:
 
 ```
@@ -239,6 +261,8 @@ AWS_REGION
 AWS_ACCOUNT_ID
 BUCKET_RAW
 BUCKET_PROCESSED
+FIREHOSE_ROLE_ARN
+KINESIS_STREAM_ARN
 ```
 
 ### Branches
