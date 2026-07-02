@@ -10,6 +10,12 @@ resource "aws_lambda_function" "transform" {
   architectures = ["x86_64"]
   memory_size   = 128
   timeout       = 30
+
+  environment {
+    variables = {
+      BUCKET = var.bucket_raw
+    }
+  }
 }
 
 resource "aws_lambda_event_source_mapping" "kinesis_trigger" {
