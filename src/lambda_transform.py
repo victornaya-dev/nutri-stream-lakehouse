@@ -1,9 +1,10 @@
 import json
 import boto3
 import base64
+import os
 
 s3 = boto3.client('s3')
-BUCKET = "food-facts-raw-victor"
+BUCKET = os.environ["BUCKET"]
 
 def lambda_handler(event, context):
     for record in event['Records']:
