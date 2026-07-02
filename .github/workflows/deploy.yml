@@ -34,6 +34,22 @@ jobs:
       - name: Terraform Init
         run: cd terraform && terraform init -backend-config="region=${{ secrets.AWS_REGION }}" 
 
+      - name: Terraform Import existing resources
+        run: |
+          cd terraform
+          terraform import aws_iam_role.glue_role AWSGlueServiceRole-food-facts || true
+          terraform import aws_iam_role.firehose_role firehose-food-facts-role || true
+          terraform import aws_iam_role.lambda_role food-facts-transform-role-mnn2m10u || true
+          terraform import aws_kinesis_stream.main arn:aws:kinesis:eu-west-1:${{ secrets.AWS_ACCOUNT_ID }}:stream/food-facts-stream || true
+          terraform import aws_s3_bucket.raw ${{ secrets.BUCKET_RAW }} || true
+          terraform import aws_s3_bucket.processed ${{ secrets.BUCKET_PROCESSED }} || true
+        env:
+          TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          TF_VAR_kinesis_stream_arn: ${{ secrets.KINESIS_STREAM_ARN }}
+          TF_VAR_firehose_role_arn: ${{ secrets.FIREHOSE_ROLE_ARN }}
+          TF_VAR_bucket_raw: ${{ secrets.BUCKET_RAW }}
+          TF_VAR_bucket_processed: ${{ secrets.BUCKET_PROCESSED }}
+
       - name: Terraform Apply
         run: cd terraform && terraform apply -auto-approve
         env:
@@ -42,3 +58,4 @@ jobs:
           TF_VAR_firehose_role_arn: ${{ secrets.FIREHOSE_ROLE_ARN }}
           TF_VAR_bucket_raw: ${{ secrets.BUCKET_RAW }}
           TF_VAR_bucket_processed: ${{ secrets.BUCKET_PROCESSED }}
+
