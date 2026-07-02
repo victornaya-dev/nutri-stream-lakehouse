@@ -11,6 +11,7 @@ resource "aws_glue_crawler" "json_crawler" {
   s3_target {
     path = "s3://${var.bucket_raw}/cleaned/"
   }
+  depends_on = [aws_s3_bucket.raw]
 }
 
 resource "aws_glue_crawler" "parquet_crawler" {
@@ -26,6 +27,8 @@ resource "aws_glue_crawler" "parquet_crawler" {
   s3_target {
     path = "s3://${var.bucket_processed}/parquet/"
   }
+  depends_on = [aws_s3_bucket.processed]
+
 }
 
 
