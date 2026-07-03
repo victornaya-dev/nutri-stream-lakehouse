@@ -182,6 +182,8 @@ aws glue start-crawler --name food-facts-parquet-crawler
 
 Once the second crawler finishes, open AWS Console → Athena and run:
 
+> **Note:** Athena requires an S3 location to store query results. Before running queries, go to Athena → Settings → Manage and set a query result location, e.g. `s3://your-raw-bucket/athena-results/`. S3 will create this prefix automatically on the first query.
+
 ```sql
 SELECT nutriscore_grade, COUNT(*) as total
 FROM food_facts_db.parquet
