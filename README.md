@@ -8,6 +8,9 @@
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
 ![CI/CD](https://github.com/victornaya-dev/nutri-stream-lakehouse/actions/workflows/deploy.yml/badge.svg)
 
+
+🎬 [Watch the full deployment walkthrough](https://youtu.be/0J8CeReNmkA)
+
 ---
 
 ## Architecture
